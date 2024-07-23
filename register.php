@@ -40,7 +40,7 @@ if ($_POST && $_POST['mail']) {
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
-                $mail->setFrom('your_email@gmail.com', 'anjay');
+                $mail->setFrom('your_email@gmail.com', 'Surya Teknik Utama');
                 $mail->addAddress($user->mail, $user->nl);
 
                 $mail->isHTML(true);
