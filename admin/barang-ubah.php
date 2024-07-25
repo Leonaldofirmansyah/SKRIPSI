@@ -24,15 +24,15 @@ if ($_POST) {
 
     // Upload file gambar jika ada
     if (!empty($_FILES["gambar_barang"]["name"])) {
-        $target_dir = "../uploads/";
+        $target_dir = "../uploads/products/";
         $target_file = $target_dir . basename($_FILES["gambar_barang"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $check = getimagesize($_FILES["gambar_barang"]["tmp_name"]);
 
         if ($check !== false) {
             // Hapus gambar lama jika ada
-            if ($barang->gambar && file_exists("../uploads/" . $barang->gambar)) {
-                unlink("../uploads/" . $barang->gambar);
+            if ($barang->gambar && file_exists("../uploads/products/" . $barang->gambar)) {
+                unlink("../uploads/products/" . $barang->gambar);
             }
 
             // Upload gambar baru

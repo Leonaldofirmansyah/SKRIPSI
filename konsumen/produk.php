@@ -159,7 +159,7 @@ if (!isset($_SESSION['nama_lengkap'])) {
             </li>
             <li class="nav-item">
                 <?php if (isset($_SESSION['role'])) { ?>
-                    <a class="nav-link" href="logout.php">LOGOUT</a>
+                    <a class="nav-link" href="../logout.php">LOGOUT</a>
                 <?php } ?>
             </li>
         </ul>

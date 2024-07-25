@@ -95,31 +95,32 @@ class Barang {
 
     // Method untuk menghapus barang
     public function delete() {
-        // Mulai transaksi
         $this->conn->beginTransaction();
-
+    
         try {
             // Hapus data terkait di tabel transaksi
             $query = "DELETE FROM transaksi WHERE kode_item = :kode_item";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':kode_item', $this->kode_item);
             $stmt->execute();
-
+    
             // Hapus barang
             $query = "DELETE FROM " . $this->table_satu . " WHERE kode_item = :kode_item";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':kode_item', $this->kode_item);
             $stmt->execute();
-
+    
             // Commit transaksi
             $this->conn->commit();
             return true;
         } catch (Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             $this->conn->rollBack();
-            echo "Error: " . $e->getMessage();
+            error_log("Error: " . $e->getMessage());
             return false;
         }
     }
+    
+    
 }
 ?>

@@ -248,7 +248,7 @@ if (isset($_SESSION['role'])) {
                             <td><?php echo $no++ ?></td>
                             <td><?php echo htmlspecialchars($row['kode_item']) ?></td>
                             <td><?php echo htmlspecialchars($row['nama_item']) ?></td>
-                            <td><img src="../uploads/<?php echo htmlspecialchars($row['gambar']) ?>" alt="Gambar Barang" style="width: 100px; height: 100px;"></td>
+                            <td><img src="../uploads/products/<?php echo htmlspecialchars($row['gambar']) ?>" alt="Gambar Barang" style="width: 100px; height: 100px;"></td>
                             <td class="text-center">
                                 <a href="barang-ubah.php?id=<?php echo base64_encode($row['kode_item']) ?>" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="barang-hapus.php?id=<?php echo base64_encode($row['kode_item']) ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
@@ -263,6 +263,7 @@ if (isset($_SESSION['role'])) {
     </div>
       <!-- Bootstrap Bundle with Popper -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 <?php
