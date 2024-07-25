@@ -7,7 +7,7 @@ if (isset($_POST['selected_items']) && isset($_POST['opsi_pembayaran']) && isset
 
     // Pastikan file berhasil diupload
     if ($_FILES['bukti_pembayaran']['error'] == UPLOAD_ERR_OK) {
-        $target_dir = "uploads/payment/";
+        $target_dir = "../uploads/payment/";
         $target_file = $target_dir . basename($_FILES['bukti_pembayaran']['name']);
         if (move_uploaded_file($_FILES['bukti_pembayaran']['tmp_name'], $target_file)) {
             $bukti_pembayaran = $target_file;

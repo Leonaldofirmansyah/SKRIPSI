@@ -178,12 +178,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !$alert_display) {
                         <input type="number" name="jumlah" class="form-control" placeholder="Masukkan Jumlah Pesanan" required />
                     </div>
                     <div class="form-group">
-                        <label>Upload File / Gambar Pesanan</label>
+                        <label>Upload Gambar Pesanan</label>
                         <input type="file" name="gambar" class="form-control" />
                         <small class="form-text text-muted">
-                            * Gambar harus berukuran maksimum 5MB, berformat JPEG, PNG, atau GIF. 
-                            * Resolusi gambar tidak boleh lebih dari 1920x1080 piksel.
-                            * Gambar memiliki detail ukuran
+                            * Gambar harus berukuran maksimum 5MB, berformat JPEG, PNG.
+                            <br>
+                            * Gambar memiliki detail ukuran, bentuk dan warna.
                         </small>
                     </div>
                     <div class="form-group d-flex justify-content-between">

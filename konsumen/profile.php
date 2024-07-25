@@ -1,8 +1,8 @@
 <?php
-include_once 'includes/db_connect.php';
-include_once 'includes/config.php';
-include_once 'includes/user.inc.php';
-include_once 'includes/address.inc.php';
+include_once '../includes/db_connect.php';
+include_once '../includes/config.php';
+include_once '../includes/user.inc.php';
+include_once '../includes/address.inc.php';
 
 session_start();
 if (!isset($_SESSION['id_pengguna'])) {
@@ -70,11 +70,33 @@ if ($_POST) {
             flex-direction: column;
         }
         .navbar-custom {
-            background-color: #343a40;
+            background-color: black;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
         }
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
-            color: #fff;
+            color: #ffffff;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #d1d1d1;
+        }
+        .navbar-custom .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand img {
+            max-height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+        .navbar-custom .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .navbar-custom .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
         .navbar-custom .nav-link:hover {
             color: #d1d1d1;
@@ -118,26 +140,38 @@ if ($_POST) {
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="dashboard.php">
-            <img src="images/logo.png" alt="Company Logo" style="height: 40px;">
-            Surya Teknik Utama
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="profile.php">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="dashboard.php">
+        <img src="../images/logo.png" alt="Company Logo">
+        CV.Surya Teknik Utama
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+                <a class="nav-link" href="dashboard.php">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="produk.php">Produk</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="keranjang.php">Keranjang</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="view_pesanan.php">Pengajuan Pesanan</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pesanan.php">Pesanan</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../logout.php">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
     <div class="container">
         <?php if (isset($message)): ?>
