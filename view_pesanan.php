@@ -96,8 +96,8 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
             color: #fff;
         }
         .card-header-custom {
-        margin-bottom: 20px; /* Mengatur jarak bawah dari card-header */
-    }
+            margin-bottom: 20px; /* Mengatur jarak bawah dari card-header */
+        }
     </style>
 </head>
 <body>
@@ -112,7 +112,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="dashboard_konsumen.php">Home</a>
             </li>
             <li class="nav-item">
@@ -122,7 +122,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
                 <a class="nav-link" href="keranjang.php">Keranjang</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pembayaran.php">Pembayaran</a>
+                <a class="nav-link" href="pesanan.php">Pesanan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="profile.php">Profile</a>
@@ -166,7 +166,8 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
                     <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                         <tr>
                             <td>
-                                <input type="checkbox" name="selected_items[]" value="<?php echo htmlspecialchars($row['id_transaksi']); ?>">
+                                <input type="checkbox" name="selected_items[]" value="<?php echo htmlspecialchars($row['id_transaksi']); ?>"
+                                <?php if ($row['status_pembayaran'] === 'Diterima'): ?> disabled <?php endif; ?>>
                             </td>
                             <td><?php echo htmlspecialchars($row['id_transaksi']); ?></td>
                             <td><?php echo htmlspecialchars($row['nama_item']); ?></td>
@@ -181,7 +182,11 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
                             </td>
                             <td><?php echo htmlspecialchars($row['harga_item']); ?></td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-sm cancel-btn" data-item="<?php echo htmlspecialchars($row['id_transaksi']); ?>">Batalkan</button>
+                                <?php if ($row['status_pembayaran'] === 'Diterima'): ?>
+                                    <button type="button" class="btn btn-secondary btn-sm" disabled>Batalkan</button>
+                                <?php else: ?>
+                                    <button type="button" class="btn btn-danger btn-sm cancel-btn" data-item="<?php echo htmlspecialchars($row['id_transaksi']); ?>">Batalkan</button>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -194,7 +199,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
         </table>
 
         <div class="text-right">
-            <button type="submit" class="btn btn-primary">Lanjut ke Pembayaran</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary">Lanjut ke Pembayaran</button>
         </div>
     </form>
 </div>
@@ -216,7 +221,25 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
                 $('#cancel-form').submit();
             }
         });
+
+        // Fungsi untuk memeriksa status checkbox
+        function checkCheckbox() {
+            if ($('input[name="selected_items[]"]:checked').length > 0) {
+                $('#submit-btn').prop('disabled', false); // Aktifkan tombol jika ada checkbox yang dipilih
+            } else {
+                $('#submit-btn').prop('disabled', true);  // Nonaktifkan tombol jika tidak ada checkbox yang dipilih
+            }
+        }
+
+        // Panggil fungsi saat dokumen siap
+        checkCheckbox();
+
+        // Tambahkan event listener pada perubahan status checkbox
+        $('input[name="selected_items[]"]').on('change', function() {
+            checkCheckbox();
+        });
     });
 </script>
+
 </body>
 </html>

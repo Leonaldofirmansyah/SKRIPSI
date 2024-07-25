@@ -1,6 +1,6 @@
 <?php
-include_once 'includes/config.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../includes/config.php';
+include_once '../includes/transaksi.inc.php';
 session_start(); // Pastikan sesi dimulai
 
 $config = new Config();

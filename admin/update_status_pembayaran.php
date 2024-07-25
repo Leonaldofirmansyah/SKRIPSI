@@ -1,6 +1,6 @@
 <?php
-include_once 'includes/db_connect.php';
-include "includes/config.php";
+include_once '../includes/db_connect.php';
+include "../includes/config.php";
 
 $config = new Config();
 $db = $config->getConnection();

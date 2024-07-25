@@ -73,6 +73,16 @@ $pesanan = $transaksi->getCartItems();
             background-color: #495057;
             color: #fff;
         }
+        .table th, .table td {
+            text-align: center;
+        }
+        .action-btns {
+            display: flex;
+            justify-content: center;
+        }
+        .action-btns button {
+            margin: 0 5px;
+        }
     </style>
 </head>
 <body>
@@ -87,25 +97,22 @@ $pesanan = $transaksi->getCartItems();
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-            <li class="nav-item">
                 <a class="nav-link" href="dashboard_konsumen.php">Home</a>
             </li>
+            <li class="nav-item">
                 <a class="nav-link" href="produk.php">Produk</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="view_pesanan.php">Pengajuan Pesanan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="view_pesanan.php">Pesanan</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pembayaran.php">Pembayaran</a>
+                <a class="nav-link" href="pesanan.php">Pesanan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="profile.php">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="login.php">Logout</a>
+                <a class="nav-link" href="logout.php">Logout</a>
             </li>
         </ul>
     </div>
@@ -121,18 +128,22 @@ $pesanan = $transaksi->getCartItems();
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Pilih</th>
                                     <th>Kode Item</th>
                                     <th>Nama Item</th>
                                     <th>Jumlah</th>
                                     <th>Tanggal Pesan</th>
                                     <th>Gambar</th>
-                                    <th>Pilih</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if ($pesanan): ?>
                                     <?php foreach ($pesanan as $item): ?>
                                         <tr>
+                                            <td>
+                                                <input type="checkbox" name="selected_items[]" value="<?php echo htmlspecialchars($item['id_transaksi']); ?>">
+                                            </td>
                                             <td><?php echo htmlspecialchars($item['kode_item']); ?></td>
                                             <td><?php echo htmlspecialchars($item['nama_item']); ?></td>
                                             <td><?php echo htmlspecialchars($item['jumlah_transaksi']); ?></td>
@@ -144,8 +155,8 @@ $pesanan = $transaksi->getCartItems();
                                                     No Image
                                                 <?php endif; ?>
                                             </td>
-                                            <td>
-                                                <input type="checkbox" name="selected_items[]" value="<?php echo htmlspecialchars($item['id_transaksi']); ?>">
+                                            <td class="action-btns">
+                                                <button type="button" class="btn btn-danger btn-sm remove-btn" data-id="<?php echo htmlspecialchars($item['id_transaksi']); ?>">Hapus dari Keranjang</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -164,8 +175,26 @@ $pesanan = $transaksi->getCartItems();
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.remove-btn').on('click', function() {
+            if (confirm('Apakah Anda yakin ingin menghapus item ini dari keranjang?')) {
+                var idTransaksi = $(this).data('id');
+                $('<form>', {
+                    method: 'POST',
+                    action: 'remove_from_cart.php'
+                }).append($('<input>', {
+                    type: 'hidden',
+                    name: 'id_transaksi',
+                    value: idTransaksi
+                })).appendTo('body').submit();
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

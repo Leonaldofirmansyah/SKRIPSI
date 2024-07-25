@@ -14,11 +14,16 @@ class Pembayaran {
                           status_pembayaran = 'Menunggu Dikonfirmasi' 
                       WHERE id_transaksi = :id_transaksi";
             $stmt = $this->conn->prepare($query);
-
+    
+            // Debugging
+            echo "ID Transaksi: " . htmlspecialchars($id_transaksi) . "<br>";
+            echo "Opsi Pembayaran: " . htmlspecialchars($opsi_pembayaran) . "<br>";
+            echo "Bukti Pembayaran: " . htmlspecialchars($bukti_pembayaran) . "<br>";
+    
             $stmt->bindParam(':id_transaksi', $id_transaksi);
             $stmt->bindParam(':opsi_pembayaran', $opsi_pembayaran);
             $stmt->bindParam(':bukti_pembayaran', $bukti_pembayaran);
-
+    
             if ($stmt->execute()) {
                 return true;
             } else {
@@ -29,5 +34,6 @@ class Pembayaran {
             return false;
         }
     }
+    
 }
 ?>

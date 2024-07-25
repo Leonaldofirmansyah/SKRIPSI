@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Redirect berdasarkan role
         if (isset($_SESSION['role'])) { // Pastikan session role diatur
             if ($_SESSION['role'] === 'Admin') {
-                header("Location: transaksi.php");
+                header("Location: admin/dashboard.php");
             } else {
                 header("Location: dashboard_konsumen.php");
             }
@@ -117,15 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="dashboard.php">HOME</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="login.php">PRODUK</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="login.php">PEMBAYARAN</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="login.php">PENGIRIMAN</a>
             </li>
         </ul>
     </div>

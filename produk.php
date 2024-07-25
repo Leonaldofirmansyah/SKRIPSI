@@ -146,10 +146,10 @@ if (!isset($_SESSION['nama_lengkap'])) {
                 <a class="nav-link" href="keranjang.php">keranjang</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="view_pesanan.php">Pesanan</a>
+                <a class="nav-link" href="view_pesanan.php">Pengajuan Pesanan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pembayaran.php">Pembayaran</a>
+                <a class="nav-link" href="pesanan.php">Pesanan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="pengiriman_konsumen.php">Pengiriman</a>
@@ -169,7 +169,7 @@ if (!isset($_SESSION['nama_lengkap'])) {
 <!-- Main Content -->
 <div class="container mt-5">
     <?php if (isset($_GET['dashboard'])) {
-        if ($_SESSION['role'] != base64_encode('Admin')) { ?>
+        if ($_SESSION['role'] != ('Admin')) { ?>
             <div class="text-center">Halaman ini hanya untuk hak akses Admin saja!</div>
         <?php } else { ?>
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -214,14 +214,17 @@ if (!isset($_SESSION['nama_lengkap'])) {
             </div>
         <?php }
     } else { ?>
-        <!-- Product Section -->
-        <section id="products" class="my-5">
+<!-- Product Section -->
+<section id="products" class="my-5">
     <div class="card-header card-header-custom">Produk</div>
     <div class="row">
         <?php while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)) { ?>
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="<?= $rowBarang['gambar'] ?>" alt="<?= $rowBarang['nama_item'] ?>">
+                    <?php 
+                    $imagePath = 'uploads/products/' . $rowBarang['gambar']; // Tambahkan jalur direktori di sini
+                    ?>
+                    <img class="card-img-top" src="<?= $imagePath ?>" alt="<?= $rowBarang['nama_item'] ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?= $rowBarang['nama_item'] ?></h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet lacus nec tempus sodales.</p>
@@ -231,7 +234,8 @@ if (!isset($_SESSION['nama_lengkap'])) {
             </div>
         <?php } ?>
     </div>
-        </section>
+</section>
+
     <?php } ?>
 </div>
 

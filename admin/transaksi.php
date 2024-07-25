@@ -1,33 +1,48 @@
 <?php
-include_once 'includes/db_connect.php';
-include "includes/config.php";
+include_once '../includes/db_connect.php';
+include_once '../includes/config.php';
 session_start();
+
 if (!isset($_SESSION['nama_lengkap'])) {
-    echo "<script>location.href='login.php'</script>";
+    echo "<script>location.href='../login.php'</script>";
+    exit;
 }
+
 $config = new Config();
 $db = $config->getConnection();
 
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] != ('Admin')) { ?>
+    if ($_SESSION['role'] != 'Admin') { ?>
         <div class="container">
             <div class="text-center">Halaman ini hanya untuk hak akses Admin saja!</div>
         </div>
     <?php 
     } else {
-        include_once 'includes/transaksi.inc.php';
+        include_once '../includes/transaksi.inc.php';
         $pro = new Transaksi($db);
 
         // Ambil nilai pencarian jika ada
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $stmt = $pro->readAll($search);
 ?>
+        <!-- Kode HTML untuk menampilkan transaksi -->
+        <div class="container mt-4">
+            <h1>Data Transaksi</h1>
+            <!-- Tambahkan form pencarian dan tabel data transaksi di sini -->
+        </div>
+<?php
+    } // Penutup blok else
+} else { ?>
+    <div class="container">
+        <div class="text-center">Halaman ini hanya untuk hak akses Admin saja!</div>
+    </div>
+<?php } // Penutup blok if ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Pesanan</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for Icons -->
@@ -35,12 +50,19 @@ if (isset($_SESSION['role'])) {
     <style>
         body {
             background: #f4f4f4;
-            height: 100vh;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
+            height: 100vh;
         }
         .navbar-custom {
             background-color: #343a40;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure navbar is on top */
         }
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
@@ -49,8 +71,44 @@ if (isset($_SESSION['role'])) {
         .navbar-custom .nav-link:hover {
             color: #d1d1d1;
         }
-        .container {
-            margin-top: 10px; /* Margin untuk membuat ruang antara navbar dan konten */
+        .sidebar {
+            width: 250px;
+            background: #343a40;
+            color: #fff;
+            position: fixed;
+            top: 56px; /* Navbar height */
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            padding-top: 1rem;
+            z-index: 1000; /* Ensure sidebar is on top */
+        }
+        .sidebar .nav-link {
+            color: #fff;
+        }
+        .sidebar .nav-link.active {
+            background: #495057;
+        }
+        .sidebar .nav-link:hover {
+            background: #495057;
+        }
+        .sidebar .dropdown-menu {
+            background: #343a40;
+            border: none;
+        }
+        .sidebar .dropdown-item {
+            color: #fff;
+        }
+        .sidebar .dropdown-item:hover {
+            background: #495057;
+        }
+        .content {
+            margin-left: 250px; /* Adjust according to sidebar width */
+            margin-top: 0px; /* Navbar height */
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            height: calc(100vh - 56px); /* Adjust the height to account for the navbar */
         }
         .btn-primary {
             background-color: #343a40;
@@ -59,7 +117,6 @@ if (isset($_SESSION['role'])) {
         .btn-primary:hover {
             background-color: #495057;
         }
-        /* Custom CSS untuk table dan gambar */
         .table-wrapper {
             overflow-x: auto; /* Memungkinkan scroll horizontal jika diperlukan */
         }
@@ -90,7 +147,7 @@ if (isset($_SESSION['role'])) {
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="dashboard.php">
-            <img src="images/logo.png" alt="Company Logo" style="height: 40px;">
+            <img src="../images/logo.png" alt="Company Logo" style="height: 40px;">
             Surya Teknik Utama
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,68 +173,114 @@ if (isset($_SESSION['role'])) {
             </ul>
         </div>
     </nav>
-    <!-- Tempat untuk Alert -->
-    <div class="alert-container">
-        <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert alert-info">
-                <?php
-                echo $_SESSION['message'];
-                unset($_SESSION['message']);
-                ?>
-            </div>
-        <?php endif; ?>
-    </div>
-    <div class="container-fluid">
-        <div class="row justify-content-between mb-3">
-            <div class="col-4">
-                <h3>Data Transaksi</h3>
-            </div>
-            <div class="col-4">
-                <!-- Form Pencarian -->
-                <form method="GET" action="transaksi.php" class="form-inline">
-                    <input type="text" name="search" placeholder="Cari Kode Transaksi atau Nama Barang" class="form-control mr-2" value="<?php echo htmlspecialchars($search); ?>">
-                    <button type="submit" class="btn btn-primary">Cari</button>
-                </form>
-            </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="p-3">
+            <h4>Menu</h4>
+            <ul class="nav flex-column">
+            <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="transaksi.php">Pesanan</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Produk
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="barang.php">List Produk</a></li>
+                        <li><a class="dropdown-item" href="barang-baru.php">Tambah Produk</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Manajemen Stok
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="manage_inventory.php">Stok Bahan</a></li>
+                        <li><a class="dropdown-item" href="add_inventory.php">Tambah Bahan Baku</a></li>
+                        <li><a class="dropdown-item" href="request_stock.php">Permintaan Bahan Baku</a></li>
+                        <li><a class="dropdown-item" href="manage_requests.php">Cetak</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pengeluaran
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="input_expense.php">Tambah Pengeluaran</a></li>
+                        <li><a class="dropdown-item" href="manage_expenses.php">Laporan Pengeluaran</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pesanan Konsumen
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="manage_orders.php">Konsumen Perorangan</a></li>
+                        <li><a class="dropdown-item" href="manage_company_orders.php">Konsumen Perusahaan</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage_returns.php">Pengembalian</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage_salaries.php">Penggajian</a>
+                </li>
+            </ul>
         </div>
+    </div>
 
-        <!-- Form Ekspor ke Excel -->
-        <form method="POST" action="export_excel.php" class="mb-3">
-            <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
-            <button type="submit" name="export" class="btn btn-success">Ekspor ke Excel</button>
-        </form>
-
-        <div class="container-fluid">
+    <!-- Main Content -->
+    <div class="content">
+        <div class="container">
+            <h2>Data Transaksi</h2>
+            <form method="GET" action="">
+                <div class="form-group">
+                    <input type="text" name="search" class="form-control" placeholder="Cari Transaksi" value="<?php echo htmlspecialchars($search); ?>">
+                </div>
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </form>
+            
+            <?php if (isset($_SESSION['success_message'])) { ?>
+                <div class="alert alert-success alert-container">
+                    <?php echo $_SESSION['success_message']; ?>
+                    <?php unset($_SESSION['success_message']); ?>
+                </div>
+            <?php } ?>
+            
             <div class="table-wrapper">
-                <table width="150%" class="table table-striped table-bordered text-left" id="tabeldata">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th width="30px">No</th>
+                        <th width="30px">No</th>
                             <th>Kode Transaksi</th>
                             <th>Nama Barang</th>
                             <th>Jumlah</th>
-                            <th>Harga</th> <!-- Kolom Harga -->
+                            <th>Harga</th>
                             <th>Tanggal</th>
                             <th>Pembeli</th>
                             <th>Status Pemesanan</th>
                             <th>Gambar Pesanan</th>
-                            <th>Status Pembayaran</th> <!-- Kolom Status Pembayaran -->
-                            <th>Bukti Pembayaran</th> <!-- Kolom Unduh Bukti Pembayaran -->
+                            <th>Status Pembayaran</th>
+                            <th>Bukti Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
-                <?php
-                $no = 1;
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                        <tr>
-                            <td><?php echo $no++ ?></td>
-                            <td><?php echo htmlspecialchars($row['id_transaksi']) ?></td>
-                            <td><?php echo htmlspecialchars($row['nama_item']) ?></td>
-                            <td><?php echo htmlspecialchars($row['jumlah_transaksi']) ?></td>
-                            <td>
-                                <!-- Form untuk memperbarui harga dengan AJAX -->
-                                <form method="POST" class="update-harga-form">
+                    <?php
+    $no = 1;
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        ?>
+                <tr>
+                    <td><?php echo $no++ ?></td>
+                    <td><?php echo htmlspecialchars($row['id_transaksi']) ?></td>
+                    <td><?php echo htmlspecialchars($row['nama_item']) ?></td>
+                    <td><?php echo htmlspecialchars($row['jumlah_transaksi']) ?></td>
+                    <td>
+<!-- Form untuk memperbarui harga dengan AJAX -->
+<form method="POST" class="update-harga-form">
                                     <input type="hidden" name="id_transaksi" value="<?php echo htmlspecialchars($row['id_transaksi']) ?>">
                                     <input type="text" name="harga_item" class="form-control form-control-sm" value="<?php echo htmlspecialchars($row['harga_item']) ?>">
                                     <button type="submit" class="btn btn-primary btn-sm">Update</button>
@@ -200,25 +303,23 @@ if (isset($_SESSION['role'])) {
                             </td>
                             <td>
                                 <?php if (!empty($row['gambar'])) { ?>
-                                    <a href="<?= htmlspecialchars($row['gambar']) ?>" alt="Gambar Pesanan" class="btn btn-info" download>Unduh</a>
+                                    <a href="../<?= htmlspecialchars($row['gambar']) ?>" alt="Gambar Pesanan" class="btn btn-info" download>Unduh</a>
+
                                 <?php } ?>
                             </td>
                             <td>
                             <form method="POST" action="update_status_pembayaran.php">
     <input type="hidden" name="id_transaksi" value="<?php echo htmlspecialchars($row['id_transaksi']) ?>">
     <select name="status_pembayaran" class="form-control form-control-sm" onchange="this.form.submit()">
-        <option value="Belum Dibayar" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Belum Dibayar') ? 'selected' : ''; ?>>Belum Dibayar</option>
+        <option value="Pending" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
         <option value="Diterima" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Diterima') ? 'selected' : ''; ?>>Diterima</option>
         <option value="Ditolak" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Ditolak') ? 'selected' : ''; ?>>Ditolak</option>
     </select>
 </form>
-
-
-
                             </td>
                             <td>
                                 <?php if (!empty($row['bukti_pembayaran'])) { ?>
-                                    <a href="<?= htmlspecialchars($row['bukti_pembayaran']) ?>" alt="Bukti Pembayaran" class="btn btn-info" download>Unduh</a>
+                                    <a href="../<?= htmlspecialchars($row['bukti_pembayaran']) ?>" alt="Bukti Pembayaran" class="btn btn-info" download>Unduh</a>
                                 <?php } ?>
                             </td>
                         </tr>
@@ -262,11 +363,11 @@ if (isset($_SESSION['role'])) {
             });
         });
     </script>
+          <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 <?php 
-    }
-} else {
-    echo "<div class='container'><div class='text-center'>Anda tidak memiliki akses ke halaman ini.</div></div>";
-}
+
+
 ?>

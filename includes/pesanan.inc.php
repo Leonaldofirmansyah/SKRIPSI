@@ -3,6 +3,8 @@ class barang{
     
     private $conn;
     private $table_satu = "barang";
+    private $table_name = "pesanan";
+
     private $table_dua = "kategori_item";
     
     public $ki; // Kode item
@@ -31,6 +33,14 @@ class barang{
         } else {
             return false;
         }
+    }
+
+    public function countAll() {
+        $query = "SELECT COUNT(*) as total_pesanan FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_pesanan'];
     }
 
     // Metode lainnya...

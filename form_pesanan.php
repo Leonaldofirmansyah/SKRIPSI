@@ -142,6 +142,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="nav-link" href="index.php">Produk</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="keranjang.php">Keranjang</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="view_pesanan.php">Pesanan</a>
             </li>
             <li class="nav-item active">

@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
 
     // Proses upload gambar
     if ($gambar) {
-        $target_dir = "uploads/";
+        $target_dir = "uploads/products/";
         $target_file = $target_dir . basename($gambar);
         if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)) {
             // Gambar berhasil diupload
