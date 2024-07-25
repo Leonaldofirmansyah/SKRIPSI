@@ -45,20 +45,34 @@ class Barang {
 
     // Method untuk membaca data barang berdasarkan kode
     public function readOne() {
+        error_log("Executing readOne with kode_item: " . $this->kode_item);
+        
         $query = "SELECT * FROM " . $this->table_satu . " WHERE kode_item = :kode_item LIMIT 0,1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':kode_item', $this->kode_item);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            $this->kode_item = $row['kode_item'];
-            $this->nama_item = $row['nama_item'];
-            $this->gambar = $row['gambar'];
-            return true;
-        } else {
-            return false; // Mengembalikan false jika barang tidak ditemukan
+        
+        try {
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            error_log("Query executed: " . $query);
+            error_log("Query result: " . print_r($row, true));
+            
+            if ($row) {
+                $this->kode_item = $row['kode_item'];
+                $this->nama_item = $row['nama_item'];
+                $this->gambar = $row['gambar'];
+                return true;
+            } else {
+                return false; // Barang tidak ditemukan
+            }
+        } catch (Exception $e) {
+            error_log("Error executing query: " . $e->getMessage());
+            return false; // Kesalahan saat eksekusi query
         }
     }
+    
+    
 
     // Method untuk memperbarui data barang
     public function update() {

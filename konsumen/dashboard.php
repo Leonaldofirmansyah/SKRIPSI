@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'includes/config.php';
+include_once '../includes/config.php';
 
 $config = new Config();
 $db = $config->getConnection();
@@ -72,7 +72,7 @@ $db = $config->getConnection();
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="dashboard.php">
-        <img src="images/logo.png" alt="Company Logo">
+        <img src="../images/logo.png" alt="Company Logo">
         CV.Surya Teknik Utama
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,16 +106,16 @@ $db = $config->getConnection();
     <div id="carouselExampleControls" class="carousel slide mb-4" data-ride="carousel" data-interval="2000">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/Picture11.png" class="d-block w-100" alt="Slide 1">
+                <img src="../images/Picture11.png" class="d-block w-100" alt="Slide 1">
             </div>
             <div class="carousel-item">
-                <img src="images/Picture22.png" class="d-block w-100" alt="Slide 2">
+                <img src="../images/Picture22.png" class="d-block w-100" alt="Slide 2">
             </div>
             <div class="carousel-item">
-                <img src="images/Picture33.png" class="d-block w-100" alt="Slide 3">
+                <img src="../images/Picture33.png" class="d-block w-100" alt="Slide 3">
             </div>
             <div class="carousel-item">
-                <img src="images/Picture4.png" class="d-block w-100" alt="Slide 2">
+                <img src="../images/Picture4.png" class="d-block w-100" alt="Slide 2">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

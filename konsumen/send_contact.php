@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Sertakan file autoload Composer
-require 'vendor/autoload.php'; // Jika menggunakan Composer
+require '../vendor/autoload.php'; // Jika menggunakan Composer
 
 // Ambil data dari formulir
 $name = $_POST['name'];

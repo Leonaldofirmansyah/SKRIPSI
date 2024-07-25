@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once 'includes/config.php';
-include_once 'includes/transaksi.inc.php';
-include_once 'includes/status_pembayaran.inc.php'; // Pastikan jalur ini benar
+include_once '../includes/config.php';
+include_once '../includes/transaksi.inc.php';
+include_once '../includes/status_pembayaran.inc.php'; // Pastikan jalur ini benar
 
 // Pastikan pengguna sudah login
 if (!isset($_SESSION['id_pengguna'])) {
@@ -104,7 +104,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
 
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">
-        <img src="images/logo.png" alt="Company Logo">
+        <img src="../images/logo.png" alt="Company Logo">
         CV.Surya Teknik Utama
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,7 +113,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="dashboard_konsumen.php">Home</a>
+                <a class="nav-link" href="dashboard.php">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="produk.php">Produk</a>
@@ -128,7 +128,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
                 <a class="nav-link" href="profile.php">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="login.php">Logout</a>
+                <a class="nav-link" href="../login.php">Logout</a>
             </li>
         </ul>
     </div>

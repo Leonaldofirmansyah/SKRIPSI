@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once 'includes/config.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../includes/config.php';
+include_once '../includes/transaksi.inc.php';
 
 $config = new Config();
 $db = $config->getConnection();
@@ -88,7 +88,7 @@ $pesanan = $transaksi->getCartItems();
 <body>
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">
-        <img src="images/logo.png" alt="Company Logo">
+        <img src="../images/logo.png" alt="Company Logo">
         CV.Surya Teknik Utama
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

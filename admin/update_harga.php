@@ -2,6 +2,8 @@
 include_once '../includes/db_connect.php';
 include "../includes/config.php";
 
+header('Content-Type: application/json');
+
 $config = new Config();
 $db = $config->getConnection();
 

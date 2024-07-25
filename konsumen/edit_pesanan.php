@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once 'includes/config.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../includes/config.php';
+include_once '../includes/transaksi.inc.php';
 
 // Pastikan pengguna sudah login
 if (!isset($_SESSION['id_pengguna'])) {

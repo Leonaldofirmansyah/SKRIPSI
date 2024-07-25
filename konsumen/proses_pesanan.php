@@ -1,7 +1,7 @@
 <?php
-include_once 'header.php';
-include_once 'includes/barang.inc.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../header.php';
+include_once '../includes/barang.inc.php';
+include_once '../includes/transaksi.inc.php';
 
 $barang = new Barang($db);
 $transaksi = new Transaksi($db);

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once 'includes/config.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../includes/config.php';
+include_once '../includes/transaksi.inc.php';
 
 // Pastikan pengguna sudah login
 if (!isset($_SESSION['id_pengguna'])) {
@@ -117,7 +117,7 @@ foreach ($selected_items_array as $id_transaksi) {
 
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">
-        <img src="images/logo.png" alt="Company Logo">
+        <img src="../images/logo.png" alt="Company Logo">
         CV.Surya Teknik Utama
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

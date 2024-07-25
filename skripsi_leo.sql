@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Jul 2024 pada 10.23
+-- Waktu pembuatan: 25 Jul 2024 pada 19.09
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `alamat` text NOT NULL,
+  `nomor_telepon` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data untuk tabel `addresses`
+--
+
+INSERT INTO `addresses` (`id`, `user_id`, `alamat`, `nomor_telepon`) VALUES
+(1, 1, 'cicaheum jalur langit9', '0812746728'),
+(24, 41, 'dsbnadjdsjadvfhdsa', '654354576'),
+(30, 47, 'SDCBLDSHAJCDSJC', '397213627036'),
+(32, 49, 'kjsdfbdksf', '76567');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `item`
 --
 
@@ -31,25 +54,43 @@ CREATE TABLE `item` (
   `kode_item` varchar(6) NOT NULL,
   `nama_item` varchar(120) NOT NULL,
   `gambar` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `item`
 --
 
 INSERT INTO `item` (`kode_item`, `nama_item`, `gambar`) VALUES
-('001', 'Rubber Seal', 'uploads/Picture1.jpg'),
-('002', 'Besh Barrel Cot', 'uploads/Picture2.jpg'),
-('003', 'Transporting Roller PU', 'uploads/Picture3.jpg'),
-('004', 'Rubber Strip', 'uploads/Picture4.jpg'),
-('005', 'Rubber Roll Belah', 'uploads/Picture5.jpg'),
-('006', 'Bout Spiral Silicone', 'uploads/Picture6.jpg'),
-('007', 'Rubber Padder', 'uploads/Picture7.jpg'),
-('008', 'Rubber Strip Kulit Jeruk', 'uploads/Picture8.jpg'),
-('009', 'Kopling PU', 'uploads/Picture9.jpg'),
-('010', 'Rubber Kopling Bintang', 'uploads/Picture10.jpg'),
-('011', 'Karbon Seal, O-ring Viton', 'uploads/Picture11.jpg'),
-('012', 'Rubber Seal Oil', 'uploads/Picture12.jpg');
+('001', 'Rubber Seal', 'Picture7.jpg'),
+('002', 'Besh Barrel Cot', 'Picture2.jpg'),
+('003', 'Transporting Roller PU', 'Picture3.jpg'),
+('004', 'Rubber Strip', 'Picture4.jpg'),
+('005', 'Rubber Roll Belah', 'Picture5.jpg'),
+('006', 'Bout Spiral Silicone', 'Picture6.jpg'),
+('007', 'Rubber Padder', 'Picture7.jpg'),
+('008', 'Rubber Strip Kulit Jeruk', 'Picture8.jpg'),
+('009', 'Kopling PU', 'Picture9.jpg'),
+('010', 'Rubber Kopling Bintang', 'Picture10.jpg'),
+('011', 'Karbon Seal, O-ring Viton', 'Picture11.jpg'),
+('012', 'Rubber Seal Oil', 'Picture12.jpg'),
+('020', 'gatau', 'Cuplikan layar 2023-04-20 185015.png'),
+('1111', 'jajaja', 'Cuplikan layar 2023-05-27 225348.png');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `keranjang`
+--
+
+CREATE TABLE `keranjang` (
+  `id_transaksi` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `kode_item` varchar(50) NOT NULL,
+  `nama_item` varchar(100) NOT NULL,
+  `jumlah_transaksi` int(11) NOT NULL,
+  `tgl_transaksi` date NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -63,16 +104,22 @@ CREATE TABLE `pengguna` (
   `email` varchar(255) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `role` enum('Admin','User') NOT NULL DEFAULT 'User'
+  `role` enum('Admin','User','Produksi','Pengiriman','Pemilik') NOT NULL DEFAULT 'User',
+  `token` varchar(100) DEFAULT NULL,
+  `is_verified` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data untuk tabel `pengguna`
 --
 
-INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `email`, `username`, `password`, `role`) VALUES
-(1, 'Leonaldo FIrmansyahh', 'leonaldofirmansyah@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin'),
-(5, 'konsumen', 'leonaldofirmansyah123@gmail.com', 'konsumen', '94727b16c2221c188d39993e39f39ac3', 'User');
+INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `email`, `username`, `password`, `role`, `token`, `is_verified`) VALUES
+(1, 'Leonaldo FIrmansyahh', 'leonaldofirmansyahh@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'User', NULL, 1),
+(5, 'konsumen', 'leonaldofirmansyah123@gmail.com', 'konsumen', '94727b16c2221c188d39993e39f39ac3', 'User', NULL, 0),
+(6, 'anjay', 'anjay@gmail.com', 'anjayy', 'ce9b3fce235a262d940d40c8d892dbc6', 'User', NULL, 0),
+(41, 'akuadalahburung', 'leonaldo.10520076@mahasiswa.unikom.ac.id', '', '$2y$10$W1XUrXKJ4KywgycBapcRjeczzF1KeJcPctS3g2Z4BSSYPWZGNuSCq', 'User', 'b375e4c00ab63afd696296979177f9f6c3e10f62006fdab3be5554950afd6ad0fbfb6b1b6bd0a047d310b7be2e8b892be13d', 1),
+(47, 'SJKDBCHDSACBLSHAJCD', 'leonaldofirmansyah@gmail.com', '', '$2y$10$5DedIhggm7WTMyUxhajML.PWYM1rlTTnP6uqtqq6M2dICP7EzcmGW', 'Admin', 'c7b3e56b4aa105587156f6d84b99e325fc95ce641971984b44f0ee7e87a9d68da45790bcfdf14d98770535633f337dc744f6', 1),
+(49, 'totong', 'totongrohanda@gmail.com', '', '$2y$10$Rc3OZAoD.7hiHF7dnd3Fv.JXtMlB.wlVpup/o8fv1I9mwF5rbZnJa', 'User', 'ad2df7c3f2c54c6efa6c1a9feebd67b9d3f58a8ab1593d351ae13572154424b5f1b007948ef88fac6171862f0a41c83eb28d', 1);
 
 -- --------------------------------------------------------
 
@@ -82,7 +129,7 @@ INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `email`, `username`, `pas
 
 CREATE TABLE `transaksi` (
   `id_transaksi` varchar(12) NOT NULL,
-  `alamat` text NOT NULL,
+  `alamat` mediumtext NOT NULL,
   `no_rekening` varchar(20) NOT NULL,
   `id_pengguna` int(11) NOT NULL,
   `kode_item` varchar(6) NOT NULL,
@@ -92,28 +139,44 @@ CREATE TABLE `transaksi` (
   `tgl_transaksi` datetime NOT NULL,
   `status_pesanan` varchar(255) DEFAULT NULL,
   `gambar` varchar(255) DEFAULT NULL,
-  `harga_item` decimal(10,2) DEFAULT NULL,
-  `status_pembayaran` enum('Diterima','Ditolak') DEFAULT NULL,
-  `bukti_pembayaran` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `harga_item` decimal(10,0) DEFAULT NULL,
+  `status_pembayaran` enum('Diterima','Ditolak','Pending') DEFAULT NULL,
+  `bukti_pembayaran` varchar(255) DEFAULT NULL,
+  `catatan` mediumtext DEFAULT NULL,
+  `opsi_pembayaran` enum('DP','Lunas') DEFAULT 'DP',
+  `keterangan` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_transaksi`, `alamat`, `no_rekening`, `id_pengguna`, `kode_item`, `nama_item`, `jumlah_transaksi`, `total_transaksi`, `tgl_transaksi`, `status_pesanan`, `gambar`, `harga_item`, `status_pembayaran`, `bukti_pembayaran`) VALUES
-('202407130002', '', '', 1, '003', 'Transporting Roller PU', 1000, 0, '2024-07-13 10:05:54', 'diterima', 'uploads/logo_unikom_kuning.png', 10000000.00, NULL, NULL),
-('202407130003', '', '', 5, '005', 'Rubber Roll Belah', 20, 0, '2024-07-13 10:08:39', 'diterima', 'uploads/leo.jpg', 200000.00, NULL, 'uploads/IMG_20240517_194044.jpg');
+INSERT INTO `transaksi` (`id_transaksi`, `alamat`, `no_rekening`, `id_pengguna`, `kode_item`, `nama_item`, `jumlah_transaksi`, `total_transaksi`, `tgl_transaksi`, `status_pesanan`, `gambar`, `harga_item`, `status_pembayaran`, `bukti_pembayaran`, `catatan`, `opsi_pembayaran`, `keterangan`) VALUES
+('38', '', '', 41, '003', 'Transporting Roller PU', 1000, 0, '2024-07-25 00:00:00', 'dikirim', '../uploads/pemesanan/logo_unikom_kuning.png', 6000, 'Diterima', NULL, NULL, 'DP', NULL),
+('40', '', '', 41, '001', 'Rubber Seal', 111, 0, '2024-07-25 00:00:00', 'Pending', '../uploads/pemesanan/Picture1.jpg', 5000, NULL, NULL, NULL, 'DP', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indeks untuk tabel `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indeks untuk tabel `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`kode_item`) USING BTREE;
+
+--
+-- Indeks untuk tabel `keranjang`
+--
+ALTER TABLE `keranjang`
+  ADD PRIMARY KEY (`id_transaksi`);
 
 --
 -- Indeks untuk tabel `pengguna`
@@ -135,21 +198,39 @@ ALTER TABLE `transaksi`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT untuk tabel `keranjang`
+--
+ALTER TABLE `keranjang`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
 -- AUTO_INCREMENT untuk tabel `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
+-- Ketidakleluasaan untuk tabel `addresses`
+--
+ALTER TABLE `addresses`
+  ADD CONSTRAINT `addresses_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Ketidakleluasaan untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transIDPeng_FK` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`),
-  ADD CONSTRAINT `transkodeitem_FK` FOREIGN KEY (`kode_item`) REFERENCES `item` (`kode_item`);
+  ADD CONSTRAINT `fk_kode_item` FOREIGN KEY (`kode_item`) REFERENCES `item` (`kode_item`),
+  ADD CONSTRAINT `transIDPeng_FK` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -104,8 +104,8 @@ if (isset($_SESSION['role'])) {
         }
         .content {
             margin-left: 250px; /* Adjust according to sidebar width */
-            margin-top: 0px; /* Navbar height */
-            padding: 20px;
+            margin-top: 0; /* Navbar height */
+            padding: 5px;
             flex: 1;
             overflow-y: auto;
             height: calc(100vh - 56px); /* Adjust the height to account for the navbar */
@@ -140,6 +140,7 @@ if (isset($_SESSION['role'])) {
         }
         .alert-container {
             margin-bottom: 1rem;
+            margin-top: 0px;
         }
     </style>
 </head>
@@ -236,6 +237,7 @@ if (isset($_SESSION['role'])) {
     <!-- Main Content -->
     <div class="content">
         <div class="container">
+        <div class="alert-container"></div>
             <h2>Data Transaksi</h2>
             <form method="GET" action="">
                 <div class="form-group">
@@ -243,7 +245,6 @@ if (isset($_SESSION['role'])) {
                 </div>
                 <button type="submit" class="btn btn-primary">Cari</button>
             </form>
-            
             <?php if (isset($_SESSION['success_message'])) { ?>
                 <div class="alert alert-success alert-container">
                     <?php echo $_SESSION['success_message']; ?>
@@ -303,19 +304,20 @@ if (isset($_SESSION['role'])) {
                             </td>
                             <td>
                                 <?php if (!empty($row['gambar'])) { ?>
-                                    <a href="../<?= htmlspecialchars($row['gambar']) ?>" alt="Gambar Pesanan" class="btn btn-info" download>Unduh</a>
+                                    <a href="<?= htmlspecialchars($row['gambar']) ?>" alt="Gambar Pesanan" class="btn btn-info" download>Unduh</a>
 
                                 <?php } ?>
                             </td>
                             <td>
                             <form method="POST" action="update_status_pembayaran.php">
-    <input type="hidden" name="id_transaksi" value="<?php echo htmlspecialchars($row['id_transaksi']) ?>">
+    <input type="hidden" name="id_transaksi" value="<?php echo htmlspecialchars($row['id_transaksi']); ?>">
     <select name="status_pembayaran" class="form-control form-control-sm" onchange="this.form.submit()">
         <option value="Pending" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
         <option value="Diterima" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Diterima') ? 'selected' : ''; ?>>Diterima</option>
         <option value="Ditolak" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Ditolak') ? 'selected' : ''; ?>>Ditolak</option>
     </select>
 </form>
+
                             </td>
                             <td>
                                 <?php if (!empty($row['bukti_pembayaran'])) { ?>
@@ -332,7 +334,7 @@ if (isset($_SESSION['role'])) {
         </div>
     </div>
 
-    <!-- jQuery -->
+<!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -347,24 +349,17 @@ if (isset($_SESSION['role'])) {
                 data: form.serialize(),
                 dataType: 'json',
                 success: function(response) {
-                    // Menghapus alert sebelumnya
                     $('.alert').remove();
-                    if (response.status === 'success') {
-                        // Menampilkan alert di bawah navbar
-                        $('.alert-container').html('<div class="alert alert-info">' + response.message + '</div>');
-                    } else {
-                        // Menampilkan alert di bawah navbar
-                        $('.alert-container').html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
+                    var alertClass = response.status === 'success' ? 'alert-success' : 'alert-danger';
+                    $('.alert-container').html('<div class="alert ' + alertClass + '">' + response.message + '</div>');
                 },
                 error: function() {
-                    alert('Terjadi kesalahan, coba lagi');
+                    $('.alert').remove();
+                    $('.alert-container').html('<div class="alert alert-danger">Terjadi kesalahan, coba lagi</div>');
                 }
             });
         });
     </script>
-          <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 <?php 

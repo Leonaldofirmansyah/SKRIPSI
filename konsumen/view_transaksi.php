@@ -1,6 +1,6 @@
 <?php
-include_once 'header.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../header.php';
+include_once '../includes/transaksi.inc.php';
 
 if (!isset($_GET['id'])) {
     echo "<div class='container'><div class='text-center'>ID Transaksi tidak ditemukan.</div></div>";

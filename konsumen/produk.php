@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-include "includes/config.php";
-include_once 'includes/barang.inc.php';
-include_once 'includes/transaksi.inc.php';
+include "../includes/config.php";
+include_once '../includes/barang.inc.php';
+include_once '../includes/transaksi.inc.php';
 
 // Buat objek untuk barang dan transaksi
 $config = new Config();
@@ -29,7 +29,7 @@ if (!isset($_SESSION['nama_lengkap'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV.SURYA TEKNIK UTAMA</title>
+    <title>PRODUK</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -131,7 +131,7 @@ if (!isset($_SESSION['nama_lengkap'])) {
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">
-        <img src="images/logo.png" alt="Company Logo">
+        <img src="../images/logo.png" alt="Company Logo">
         CV.Surya Teknik Utama
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -222,7 +222,7 @@ if (!isset($_SESSION['nama_lengkap'])) {
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card">
                     <?php 
-                    $imagePath = 'uploads/products/' . $rowBarang['gambar']; // Tambahkan jalur direktori di sini
+                    $imagePath = '../uploads/products/' . $rowBarang['gambar']; // Tambahkan jalur direktori di sini
                     ?>
                     <img class="card-img-top" src="<?= $imagePath ?>" alt="<?= $rowBarang['nama_item'] ?>">
                     <div class="card-body">

@@ -1,5 +1,5 @@
 <?php
-include "includes/config.php";
+include "../includes/config.php";
 session_start();
 if (!isset($_SESSION['nama_lengkap'])) {
     echo "<script>location.href='login.php'</script>";
@@ -9,11 +9,11 @@ if (!isset($_SESSION['nama_lengkap'])) {
 $config = new Config();
 $db = $config->getConnection();
 
-if (isset($_SESSION['role']) && $_SESSION['role'] == base64_encode('Admin')) {
+if (isset($_SESSION['role']) && $_SESSION['role'] == ('Admin')) {
     if (isset($_GET['id'])) {
-        $kode_item = base64_decode($_GET['id']);
+        $kode_item = ($_GET['id']);
 
-        include_once 'includes/barang.inc.php';
+        include_once '../includes/barang.inc.php';
         $barang = new Barang($db);
         $barang->kode_item = $kode_item;
 

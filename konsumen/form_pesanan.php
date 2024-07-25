@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once 'includes/config.php';
-include_once 'includes/barang.inc.php';
-include_once 'includes/transaksi.inc.php';
+include_once '../includes/config.php';
+include_once '../includes/barang.inc.php';
+include_once '../includes/transaksi.inc.php';
 
 $config = new Config();
 $db = $config->getConnection();
@@ -10,29 +10,35 @@ $barang = new Barang($db);
 $transaksi = new Transaksi($db);
 
 $alert_display = false;
-if (!isset($_GET['kode']) || empty($_GET['kode'])) {
-    $alert_message = "Kode item tidak valid.";
-    $alert_type = "danger";
-    $alert_display = true;
-    $kode_item = null;
-} else {
+$alert_message = "";
+$alert_type = "danger";
+$kode_item = null;
+
+// Debugging: Cek apakah parameter kode ada
+if (isset($_GET['kode'])) {
     $kode_item = base64_decode($_GET['kode']);
     $barang->kode_item = $kode_item;
+
+    // Debugging: Tampilkan kode_item yang didecode
+    error_log("Decoded kode_item: " . $kode_item);
+
     if (!$barang->readOne()) {
         $alert_message = "Barang tidak ditemukan.";
-        $alert_type = "danger";
         $alert_display = true;
     }
+} else {
+    $alert_message = "Kode item tidak valid.";
+    $alert_display = true;
 }
 
 // Menangani pengiriman formulir
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !$alert_display) {
     $jumlah = $_POST['jumlah'];
     $gambar = null;
 
     // Menangani upload gambar
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] == UPLOAD_ERR_OK) {
-        $targetDir = "uploads/";
+        $targetDir = "../uploads/pemesanan/";
         $targetFile = $targetDir . basename($_FILES["gambar"]["name"]);
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
@@ -42,19 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $gambar = $targetFile;
             } else {
                 $alert_message = "Gagal mengunggah gambar.";
-                $alert_type = "danger";
                 $alert_display = true;
             }
         } else {
             $alert_message = "Format file tidak valid. Hanya jpg, jpeg, png, gif yang diperbolehkan.";
-            $alert_type = "danger";
             $alert_display = true;
         }
     }
 
     // Jika tidak ada error, simpan pesanan ke database
     if (!$alert_display) {
-        // Mengasumsikan bahwa fungsi 'insert' dalam kelas 'Transaksi' sudah diperbarui
         $transaksi->kode_item = $kode_item;
         $transaksi->nama_item = $barang->nama_item;
         $transaksi->jumlah_transaksi = $jumlah;
@@ -130,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="#">
-        <img src="images/logo.png" alt="Company Logo">
+        <img src="../images/logo.png" alt="Company Logo">
         CV.Surya Teknik Utama
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">Produk</a>
+                <a class="nav-link" href="produk.php">Produk</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="keranjang.php">Keranjang</a>
@@ -192,7 +195,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
