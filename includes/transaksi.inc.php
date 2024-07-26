@@ -314,10 +314,30 @@ public function readAllByUser($id_pengguna) {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getAllTransactionsWithDetails() {
+        $query = "SELECT 
+                    i.nama_item, 
+                    t.harga_item AS harga, 
+                    t.jumlah_transaksi, 
+                    (t.harga_item * t.jumlah_transaksi) AS total_harga, 
+                    t.gambar, 
+                    t.status_pembayaran, 
+                    t.keterangan 
+                  FROM 
+                    transaksi t
+                  JOIN 
+                    item i ON t.kode_item = i.kode_item";
     
-
-
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
+    
     
 }
+
 
 ?>

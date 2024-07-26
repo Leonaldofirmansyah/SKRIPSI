@@ -1,25 +1,31 @@
 <?php
-session_start();
-include_once '../includes/config.php';
+// Inisialisasi file dan koneksi database
+require_once '../includes/config.php';
+require_once '../includes/transaksi.inc.php';
 
+// Membuat instance dari Config dan mendapatkan koneksi database
 $config = new Config();
 $db = $config->getConnection();
+
+// Pastikan $db diinisialisasi dengan benar
+if ($db) {
+    $transaksi = new Transaksi($db);
+    $data = $transaksi->getAllTransactionsWithDetails();
+} else {
+    die("Database connection failed.");
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Konsumen</title>
+    <title>Pesanan - Surya Teknik Utama</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             background: #f4f4f4;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 200px;
         }
         .card {
             margin-bottom: 1.5rem;
@@ -68,7 +74,6 @@ $db = $config->getConnection();
     </style>
 </head>
 <body>
-
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="dashboard.php">
@@ -80,6 +85,9 @@ $db = $config->getConnection();
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+                <a class="nav-link" href="dashboard.php">Home</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="produk.php">Produk</a>
             </li>
@@ -93,78 +101,57 @@ $db = $config->getConnection();
                 <a class="nav-link" href="pesanan.php">Pesanan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="status_pembayaran.php">Pembayaran</a>
-            </li>
-                <a class="nav-link" href="profile.php">Profile</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="../logout.php">Logout</a>
             </li>
         </ul>
     </div>
 </nav>
-
-<div class="container mt-4">
-    <!-- Carousel -->
-    <div id="carouselExampleControls" class="carousel slide mb-4" data-ride="carousel" data-interval="2000">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="../images/Picture11.png" class="d-block w-100" alt="Slide 1">
-            </div>
-            <div class="carousel-item">
-                <img src="../images/Picture22.png" class="d-block w-100" alt="Slide 2">
-            </div>
-            <div class="carousel-item">
-                <img src="../images/Picture33.png" class="d-block w-100" alt="Slide 3">
-            </div>
-            <div class="carousel-item">
-                <img src="../images/Picture4.png" class="d-block w-100" alt="Slide 2">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
-    <!-- Featured Products -->
+    <div class="container mt-5">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">Produk Terbaru</div>
-                <div class="card-body">
-                    <p class="card-text">Temukan produk terbaru kami yang mungkin Anda suka.</p>
-                    <a href="produk.php" class="btn btn-custom">Lihat Produk</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">Penawaran Spesial</div>
-                <div class="card-body">
-                    <p class="card-text">Jangan lewatkan penawaran spesial dan diskon yang sedang berlangsung.</p>
-                    <a href="pembayaran.php" class="btn btn-custom">Lihat Penawaran</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">Kontak Kami</div>
-                <div class="card-body">
-                    <p class="card-text">Ada pertanyaan atau butuh bantuan? Hubungi kami melalui halaman kontak.</p>
-                    <a href="contact.php" class="btn btn-custom">Hubungi Kami</a>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-12">
+    <div class="card">
+    <div class="card-header">Status Pembayaran</div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama Item</th>
+                    <th>Harga</th>
+                    <th>Jumlah Pesanan</th>
+                    <th>Total Harga</th>
+                    <th>Gambar Pesanan</th>
+                    <th>Status Pembayaran</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($data)): ?>
+                    <?php foreach ($data as $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['nama_item']); ?></td>
+                            <td><?php echo htmlspecialchars($row['harga']); ?></td>
+                            <td><?php echo htmlspecialchars($row['jumlah_transaksi']); ?></td>
+                            <td><?php echo htmlspecialchars($row['total_harga']); ?></td>
+                            <td>
+                                <?php if ($row['gambar']): ?>
+                                    <img src="<?php echo htmlspecialchars($row['gambar']); ?>" alt="Gambar" width="100">
+                                <?php else: ?>
+                                    Tidak ada gambar
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo htmlspecialchars($row['status_pembayaran']); ?></td>
+                            <td><?php echo htmlspecialchars($row['keterangan']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="7">Tidak ada data</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
-</div>
-
-<!-- Bootstrap JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

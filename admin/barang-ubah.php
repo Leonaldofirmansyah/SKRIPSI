@@ -41,10 +41,7 @@ if ($_POST) {
         } else {
             echo "<div class='alert alert-danger'>File yang diunggah bukan gambar.</div>";
         }
-    } else {
-        // Jika tidak ada gambar baru, tetap gunakan gambar lama
-        $barang->gambar = $barang->gambar;
-    }
+    } 
 
     if ($barang->update()) {
         $updateSuccess = true;
@@ -205,6 +202,10 @@ if ($_POST) {
                         Produk
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item <?php echo ($currentPage == 'barang.php' ? 'active' : ''); ?>" href="barang.php">List Produk</a></li>
+                        <li><a class="dropdown-item <?php echo ($currentPage == 'barang-baru.php' ? 'active' : ''); ?>" href="barang-baru.php">Tambah Produk</a></li>
+                    </ul>
+                    class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item <?php echo ($currentPage == 'barang.php' ? 'active' : ''); ?>" href="barang.php">List Produk</a></li>
                         <li><a class="dropdown-item <?php echo ($currentPage == 'barang-baru.php' ? 'active' : ''); ?>" href="barang-baru.php">Tambah Produk</a></li>
                     </ul>
