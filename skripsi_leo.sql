@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Jul 2024 pada 19.09
+-- Waktu pembuatan: 27 Jul 2024 pada 21.01
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -61,7 +61,7 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`kode_item`, `nama_item`, `gambar`) VALUES
-('001', 'Rubber Seal', 'Picture7.jpg'),
+('001', 'Rubber Seal', 'Picture1.jpg'),
 ('002', 'Besh Barrel Cot', 'Picture2.jpg'),
 ('003', 'Transporting Roller PU', 'Picture3.jpg'),
 ('004', 'Rubber Strip', 'Picture4.jpg'),
@@ -72,9 +72,7 @@ INSERT INTO `item` (`kode_item`, `nama_item`, `gambar`) VALUES
 ('009', 'Kopling PU', 'Picture9.jpg'),
 ('010', 'Rubber Kopling Bintang', 'Picture10.jpg'),
 ('011', 'Karbon Seal, O-ring Viton', 'Picture11.jpg'),
-('012', 'Rubber Seal Oil', 'Picture12.jpg'),
-('020', 'gatau', 'Cuplikan layar 2023-04-20 185015.png'),
-('1111', 'jajaja', 'Cuplikan layar 2023-05-27 225348.png');
+('012', 'Rubber Seal Oil', 'Picture12.jpg');
 
 -- --------------------------------------------------------
 
@@ -144,16 +142,8 @@ CREATE TABLE `transaksi` (
   `bukti_pembayaran` varchar(255) DEFAULT NULL,
   `catatan` mediumtext DEFAULT NULL,
   `opsi_pembayaran` enum('DP','Lunas') DEFAULT 'DP',
-  `keterangan` mediumtext DEFAULT NULL
+  `keterangan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `transaksi`
---
-
-INSERT INTO `transaksi` (`id_transaksi`, `alamat`, `no_rekening`, `id_pengguna`, `kode_item`, `nama_item`, `jumlah_transaksi`, `total_transaksi`, `tgl_transaksi`, `status_pesanan`, `gambar`, `harga_item`, `status_pembayaran`, `bukti_pembayaran`, `catatan`, `opsi_pembayaran`, `keterangan`) VALUES
-('38', '', '', 41, '003', 'Transporting Roller PU', 1000, 0, '2024-07-25 00:00:00', 'dikirim', '../uploads/pemesanan/logo_unikom_kuning.png', 6000, 'Diterima', NULL, NULL, 'DP', NULL),
-('40', '', '', 41, '001', 'Rubber Seal', 111, 0, '2024-07-25 00:00:00', 'Pending', '../uploads/pemesanan/Picture1.jpg', 5000, NULL, NULL, NULL, 'DP', NULL);
 
 --
 -- Indexes for dumped tables
@@ -207,7 +197,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengguna`

@@ -1,0 +1,64 @@
+Received: id_transaksi=<br />
+<b>Warning</b>:  Undefined variable $id_transaksi in <b>C:\xampp\htdocs\SKRIPSI\admin\transaksi.php</b> on line <b>316</b><br />
+, status_pembayaran=Ditolak, keterangan=ansjksakd
+Query executed successfully
+Received: id_transaksi=43, status_pembayaran=Ditolak, keterangan=
+Query executed successfully
+2024-07-27 20:15:41 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+2024-07-27 20:15:41 - Query executed successfully
+2024-07-27 20:16:07 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=tai
+2024-07-27 20:16:07 - Query executed successfully
+Received: id_transaksi=<br />
+<b>Warning</b>:  Undefined variable $id_transaksi in <b>C:\xampp\htdocs\SKRIPSI\admin\transaksi.php</b> on line <b>312</b><br />
+, status_pembayaran=Ditolak, keterangan=anjayy
+Query executed successfully
+Received: id_transaksi=<br />
+<b>Warning</b>:  Undefined variable $id_transaksi in <b>C:\xampp\htdocs\SKRIPSI\admin\transaksi.php</b> on line <b>312</b><br />
+, status_pembayaran=Ditolak, keterangan=kANSJANJSANDJK
+Query executed successfully
+Received: id_transaksi=<br />
+<b>Warning</b>:  Undefined variable $id_transaksi in <b>C:\xampp\htdocs\SKRIPSI\admin\transaksi.php</b> on line <b>312</b><br />
+, status_pembayaran=Ditolak, keterangan=TAI
+Query executed successfully
+2024-07-27 20:24:24 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+2024-07-27 20:24:24 - Query executed successfully
+2024-07-27 20:26:31 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=saadasdsad
+2024-07-27 20:26:31 - Query executed successfully
+2024-07-27 20:28:55 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=aaaaaaaaaaaaaaaaaaaaaaaaaa
+2024-07-27 20:28:55 - Query executed successfully
+2024-07-27 20:33:30 - Received: id_transaksi=43, status_pembayaran=Diterima, keterangan=
+2024-07-27 20:33:30 - Query executed successfully
+2024-07-27 20:33:34 - Received: id_transaksi=44, status_pembayaran=Diterima, keterangan=
+2024-07-27 20:33:34 - Query executed successfully
+2024-07-27 20:33:39 - Received: id_transaksi=45, status_pembayaran=Diterima, keterangan=
+2024-07-27 20:33:39 - Query executed successfully
+2024-07-27 20:34:02 - Received: id_transaksi=43, status_pembayaran=Ditolak, keterangan=
+2024-07-27 20:34:02 - Query executed successfully
+2024-07-27 20:34:09 - Received: id_transaksi=44, status_pembayaran=Ditolak, keterangan=
+2024-07-27 20:34:09 - Query executed successfully
+2024-07-27 20:34:12 - Received: id_transaksi=45, status_pembayaran=Ditolak, keterangan=
+2024-07-27 20:34:12 - Query executed successfully
+2024-07-27 20:35:07 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=gatau
+2024-07-27 20:35:07 - Query executed successfully
+2024-07-27 20:41:02 - Received: id_transaksi=
+Warning:  Undefined variable $id_transaksi in C:\xampp\htdocs\SKRIPSI\admin\transaksi.php on line 312
+, status_pembayaran=Ditolak, keterangan=sdsssssssssssss
+2024-07-27 20:41:02 - Query executed successfully
+2024-07-27 20:42:00 - Received: id_transaksi=43, status_pembayaran=Diterima, keterangan=
+2024-07-27 20:42:00 - Query executed successfully
+2024-07-27 20:42:06 - Received: id_transaksi=44, status_pembayaran=Diterima, keterangan=
+2024-07-27 20:42:06 - Query executed successfully
+2024-07-27 20:42:11 - Received: id_transaksi=45, status_pembayaran=Diterima, keterangan=
+2024-07-27 20:42:11 - Query executed successfully

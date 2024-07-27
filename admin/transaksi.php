@@ -308,8 +308,9 @@ if (isset($_SESSION['role'])) {
 
                                 <?php } ?>
                             </td>
+                            
                             <td>
-                            <form method="POST" action="update_status_pembayaran.php">
+                            <form method="POST" class="update-status-pembayaran-form">
     <input type="hidden" name="id_transaksi" value="<?php echo htmlspecialchars($row['id_transaksi']); ?>">
     <select name="status_pembayaran" class="form-control form-control-sm" onchange="this.form.submit()">
         <option value="Pending" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
@@ -318,10 +319,11 @@ if (isset($_SESSION['role'])) {
     </select>
 </form>
 
+
                             </td>
                             <td>
                                 <?php if (!empty($row['bukti_pembayaran'])) { ?>
-                                    <a href="../<?= htmlspecialchars($row['bukti_pembayaran']) ?>" alt="Bukti Pembayaran" class="btn btn-info" download>Unduh</a>
+                                    <a href="<?= htmlspecialchars($row['bukti_pembayaran']) ?>" alt="Bukti Pembayaran" class="btn btn-info" download>Unduh</a>
                                 <?php } ?>
                             </td>
                         </tr>
@@ -361,6 +363,77 @@ if (isset($_SESSION['role'])) {
         });
     </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Modal untuk Alasan Penolakan -->
+<div class="modal fade" id="alasanModal" tabindex="-1" role="dialog" aria-labelledby="alasanModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alasanModalLabel">Alasan Penolakan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="alasanForm" method="POST" action="update_status_pembayaran.php">
+                <div class="modal-body">
+                    <input type="hidden" name="id_transaksi" id="id_transaksi">
+                    <input type="hidden" name="status_pembayaran" value="Ditolak">
+                    <div class="form-group">
+                        <label for="alasan">Alasan Penolakan:</label>
+                        <textarea class="form-control" name="keterangan" id="alasan" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Tangani klik pada tombol "Tolak"
+        $('.reject-button').click(function() {
+            // Dapatkan id_transaksi dari baris terkait
+            var id_transaksi = $(this).data('id');
+            // Isi input hidden dengan id_transaksi
+            $('#alasanModal #id_transaksi').val(id_transaksi);
+            // Tampilkan modal
+            $('#alasanModal').modal('show');
+        });
+
+        // Tangani submit form alasan penolakan
+        $('#alasanForm').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function(response) {
+                    var res = JSON.parse(response);
+                    if (res.status === 'success') {
+                        alert('Status pembayaran berhasil diperbarui.');
+                        location.reload();
+                    } else {
+                        alert('Terjadi kesalahan saat memperbarui status pembayaran.');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
 </body>
 </html>
 <?php 
