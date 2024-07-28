@@ -9,16 +9,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include_once 'includes/login.inc.php';
     $login = new Login($db);
 
-    $login->userid = trim($_POST['email']); // Menangani input email
-    $login->passid = $_POST['password']; // Menangani input password asli
+    $login->userid = trim($_POST['email']); // Menggunakan email sebagai userid
+    $login->passid = $_POST['password']; // Password tidak perlu dienkripsi di sini, karena akan diverifikasi nanti
 
     if ($login->login()) {
         // Redirect berdasarkan role
         if (isset($_SESSION['role'])) { // Pastikan session role diatur
             if ($_SESSION['role'] === 'Admin') {
-                header("Location: admin/dashboard.php");
+                header("Location: /SKRIPSI/admin/dashboard.php");
+            } elseif ($_SESSION['role'] === 'Produksi') {
+                header("Location: /SKRIPSI/produksi/dashboard.php");
             } else {
-                header("Location: konsumen/dashboard.php");
+                header("Location: /SKRIPSI/konsumen/dashboard.php");
             }
             exit();
         } else {
@@ -41,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

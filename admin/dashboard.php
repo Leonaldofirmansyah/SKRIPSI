@@ -187,7 +187,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin') {
                         Manajemen Stok
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownStock">
-                        <li><a class="dropdown-item" href="manage_inventory.php">Stok Bahan</a></li>
+                        <li><a class="dropdown-item" href="produk_siap_produksi.php">produksi</a></li>
                         <li><a class="dropdown-item" href="add_inventory.php">Tambah Bahan Baku</a></li>
                         <li><a class="dropdown-item" href="request_stock.php">Permintaan Bahan Baku</a></li>
                         <li><a class="dropdown-item" href="manage_requests.php">Cetak</a></li>

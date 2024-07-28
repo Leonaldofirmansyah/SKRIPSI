@@ -36,7 +36,7 @@ if ($_POST && $_POST['mail']) {
                 $mail->Host = 'smtp.gmail.com'; // Ganti dengan host SMTP Anda
                 $mail->SMTPAuth = true;
                 $mail->Username = 'leonaldofirmansyah11@gmail.com'; // Ganti dengan username email Anda
-                $mail->Password = 'exhp ieap wrup nnaq'; // Ganti dengan password email Anda
+                $mail->Password = ''; // Ganti dengan password email Anda
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 

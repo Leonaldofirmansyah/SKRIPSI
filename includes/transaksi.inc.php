@@ -333,6 +333,15 @@ public function readAllByUser($id_pengguna) {
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function readAllForProduction() {
+        $query = "SELECT t.id_transaksi, i.nama_item, t.jumlah_transaksi, t.tgl_transaksi
+                  FROM transaksi t
+                  JOIN item i ON t.kode_item = i.kode_item
+                  WHERE t.status_pembayaran = 'Diterima' AND t.status_produksi = 'Menunggu Produksi'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
     
     
     

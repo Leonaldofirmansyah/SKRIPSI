@@ -167,7 +167,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
                         <tr>
                             <td>
                                 <input type="checkbox" name="selected_items[]" value="<?php echo htmlspecialchars($row['id_transaksi']); ?>"
-                                <?php if ($row['status_pembayaran'] === 'Diterima'): ?> disabled <?php endif; ?>>
+                                <?php if ($row['status_pembayaran'] === 'Diterima' || empty($row['harga_item'])): ?> disabled <?php endif; ?>>
                             </td>
                             <td><?php echo htmlspecialchars($row['id_transaksi']); ?></td>
                             <td><?php echo htmlspecialchars($row['nama_item']); ?></td>
@@ -199,7 +199,7 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
         </table>
 
         <div class="text-right">
-            <button type="submit" id="submit-btn" class="btn btn-primary">Lanjut ke Pembayaran</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary" disabled>Lanjut ke Pembayaran</button>
         </div>
     </form>
 </div>
@@ -222,24 +222,23 @@ $stmt = $transaksi->readAllByUser($id_pengguna);
             }
         });
 
-        // Fungsi untuk memeriksa status checkbox
-        function checkCheckbox() {
-            if ($('input[name="selected_items[]"]:checked').length > 0) {
-                $('#submit-btn').prop('disabled', false); // Aktifkan tombol jika ada checkbox yang dipilih
-            } else {
-                $('#submit-btn').prop('disabled', true);  // Nonaktifkan tombol jika tidak ada checkbox yang dipilih
-            }
-        }
-
-        // Panggil fungsi saat dokumen siap
-        checkCheckbox();
-
-        // Tambahkan event listener pada perubahan status checkbox
+        // Check if all selected items have non-empty harga_item
         $('input[name="selected_items[]"]').on('change', function() {
-            checkCheckbox();
+            let allSelectedHaveHarga = true;
+            $('input[name="selected_items[]"]:checked').each(function() {
+                const row = $(this).closest('tr');
+                const harga = row.find('td:eq(6)').text().trim();
+                if (harga === '') {
+                    allSelectedHaveHarga = false;
+                    return false; // break the loop
+                }
+            });
+            $('#submit-btn').prop('disabled', !allSelectedHaveHarga || $('input[name="selected_items[]"]:checked').length === 0);
         });
+
+        // Initial check on page load
+        $('input[name="selected_items[]"]').trigger('change');
     });
 </script>
-
 </body>
 </html>

@@ -308,9 +308,8 @@ if (isset($_SESSION['role'])) {
 
                                 <?php } ?>
                             </td>
-                            
                             <td>
-                            <form method="POST" class="update-status-pembayaran-form">
+                            <form method="POST" action="update_status_pembayaran.php">
     <input type="hidden" name="id_transaksi" value="<?php echo htmlspecialchars($row['id_transaksi']); ?>">
     <select name="status_pembayaran" class="form-control form-control-sm" onchange="this.form.submit()">
         <option value="Pending" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
@@ -318,7 +317,6 @@ if (isset($_SESSION['role'])) {
         <option value="Ditolak" <?php echo (isset($row['status_pembayaran']) && $row['status_pembayaran'] == 'Ditolak') ? 'selected' : ''; ?>>Ditolak</option>
     </select>
 </form>
-
 
                             </td>
                             <td>
@@ -429,7 +427,6 @@ if (isset($_SESSION['role'])) {
         });
     });
 </script>
-
 
 
 
